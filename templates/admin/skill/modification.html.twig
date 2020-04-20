@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout/Modification d'une compétence{% endblock %}
+
+{% block body %}
+    {{form_start(skillForm)}}
+    {{form_widget(skillForm)}}
+    {{form_end(skillForm)}}
+{% endblock %}

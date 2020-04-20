@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout/Modification d'une expérience professionnelle{% endblock %}
+
+{% block body %}
+    {{form_start(experienceForm)}}
+    {{form_widget(experienceForm)}}
+    {{form_end(experienceForm)}}
+{% endblock %}

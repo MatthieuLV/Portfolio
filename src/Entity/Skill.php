@@ -31,7 +31,7 @@ class Skill
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="image.name", size="image.size", mimeType="image.mimeType", originalName="image.originalName", dimensions="image.dimensions")
+     * @Vich\UploadableField(mapping="skill_image", fileNameProperty="image.name", size="image.size", mimeType="image.mimeType", originalName="image.originalName", dimensions="image.dimensions")
      * 
      * @var File|null
      */
@@ -65,11 +65,17 @@ class Skill
      * @ORM\ManyToMany(targetEntity="App\Entity\Project", mappedBy="skills")
      */
     private $projects;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Experience", mappedBy="skills")
+     */
+    private $experiences;
     
     public function __construct()
     {
         $this->image = new EmbeddedFile();
         $this->projects = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
     }
 
     /**
@@ -154,6 +160,34 @@ class Skill
         if ($this->projects->contains($project)) {
             $this->projects->removeElement($project);
             $project->removeSkill($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Experience[]
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences[] = $experience;
+            $experience->addSkill($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experiences->contains($experience)) {
+            $this->experiences->removeElement($experience);
+            $experience->removeSkill($this);
         }
 
         return $this;

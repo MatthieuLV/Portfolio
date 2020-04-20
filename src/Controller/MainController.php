@@ -4,16 +4,30 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ProjectRepository;
+use App\Repository\SkillRepository;
+use App\Form\MessageType;
+use App\Repository\ExperienceRepository;
+use App\Repository\TextRepository;
 
 class MainController extends AbstractController
 {
     /**
-     * @Route("/main", name="main")
+     * @Route("/", name="home")
      */
-    public function index()
+    public function index(ProjectRepository $projectRepository, SkillRepository $skillRepository, TextRepository $textRepository, ExperienceRepository $experienceRepository)
     {
+        $texts = $textRepository->findAll();
+        $projects = $projectRepository->findAll();
+        $skills = $skillRepository->findAll();
+        $experiences = $skillRepository->findAll();
+        $contactForm = $this->createForm(MessageType::class);
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
+            'texts' => $texts,
+            'projects' => $projects,
+            'skills' => $skills,
+            'experiences' => $experiences,
+            'contactForm' => $contactForm->createView(),
         ]);
     }
 }
