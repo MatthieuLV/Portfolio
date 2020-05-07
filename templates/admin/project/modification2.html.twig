@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout/Modification d'un projet{% endblock %}
+
+{% block body %}
+{{ form_start(projectForm) }}
+{{ form_widget(projectForm) }}
+
+<h3>Photos</h3>
+<ul class="photos" data-prototype="{{ form_widget(projectForm.photos.vars.prototype)|e('html_attr') }}">
+    {% for photo in projectForm.photos %}
+        <li>{{ form_row(photo.imageFile) }}</li>
+    {% endfor %}
+</ul>
+{{ form_end(projectForm) }}
+
+<script>
+    var $collectionHolder;
+
+// setup an "add a tag" link
+var $addPhotoButton = $('<button type="button" class="add_photo_link">Ajouter une photo</button>');
+var $newLinkLi = $('<li></li>').append($addPhotoButton);
+
+jQuery(document).ready(function() {
+    // Get the ul that holds the collection of tags
+    $collectionHolder = $('ul.photos');
+
+    
+    
+    // add the "add a tag" anchor and li to the tags ul
+    $collectionHolder.append($newLinkLi);
+
+    // add a delete link to all of the existing tag form li elements
+    $collectionHolder.find('li').each(function() {
+        addPhotoFormDeleteLink($(this));
+    });
+
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolder.data('index', $collectionHolder.find('input').length);
+
+    $addPhotoButton.on('click', function(e) {
+        // add a new tag form (see next code block)
+        addPhotoForm($collectionHolder, $newLinkLi);
+    });
+});
+
+function addPhotoForm($collectionHolder, $newLinkLi) {
+    // Get the data-prototype explained earlier
+    var prototype = $collectionHolder.data('prototype');
+
+    // get the new index
+    var index = $collectionHolder.data('index');
+
+    var newForm = prototype;
+    // You need this only if you didn't set 'label' => false in your tags field in TaskType
+    // Replace '__name__label__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    // newForm = newForm.replace(/__name__label__/g, index);
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    newForm = newForm.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    $collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+
+    // add a delete link to the new form
+    addPhotoFormDeleteLink($newFormLi);
+}
+
+function addPhotoFormDeleteLink($photoFormLi) {
+    var $removeFormButton = $('<button type="button">Supprimer cette photo</button>');
+    $photoFormLi.append($removeFormButton);
+
+    $removeFormButton.on('click', function(e) {
+        // remove the li for the tag form
+        $photoFormLi.remove();
+    });
+}
+
+
+
+</script>
+{% endblock %}

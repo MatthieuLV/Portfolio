@@ -16,7 +16,8 @@ use App\Repository\ExperienceRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\SkillRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use App\Entity\Photo;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class AdminController extends AbstractController
 {
@@ -68,13 +69,36 @@ class AdminController extends AbstractController
         if(!$project){
             $project = new Project();
         }
-        
+
+        $originalPhotos = new ArrayCollection();
+        $originalDocuments = new ArrayCollection();
+
+        foreach ($project->getPhotos() as $photo) {
+            $originalPhotos->add($photo);
+        }
+
+        foreach ($project->getDocuments() as $document) {
+            $originalDocuments->add($document);
+        }
+
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
-        {
+        {   
             $manager = $this->getDoctrine()->getManager();
+           
+            $datas = $form->getData();
+            
+            foreach ($datas->getPhotos() as $photo){
+                $manager->persist($photo);
+            }
+
+            foreach ($datas->getDocuments() as $document){
+                $manager->persist($document);
+            }
+
+
             $manager->persist($project);
             $manager->flush();
             $this->addFlash('success', "Le projet a bien été ajouté");
@@ -86,6 +110,9 @@ class AdminController extends AbstractController
             'projectForm' => $form->createView()
         ]);
     }
+
+    
+
 
     /**
      * @Route("/admin/experience/new", name="new_experience")

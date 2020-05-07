@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ExperienceType extends AbstractType
 {
@@ -18,7 +19,8 @@ class ExperienceType extends AbstractType
     {
         $builder
             ->add('companyName', TextType::class)
-            ->add('description', TextareaType::class)
+            ->add('missions', TextareaType::class)
+            ->add('context', TextType::class)
             ->add('period', TextType::class)
             ->add('results', TextareaType::class)
             ->add('skills', EntityType::class, [
@@ -26,6 +28,7 @@ class ExperienceType extends AbstractType
                 'choice_label' => 'name',
                 'multiple' => true,
             ])
+            ->add('imageFile', VichImageType::class)
             ->add('submit', SubmitType::class, [
                 'label' => "Ajouter l'expérience"
             ])

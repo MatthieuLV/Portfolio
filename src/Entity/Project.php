@@ -5,9 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
+ * @ORM\HasLifecycleCallbacks
+ * @Vich\Uploadable
  */
 class Project
 {
@@ -49,14 +53,25 @@ class Project
     private $skills;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="project")
+     * @ORM\OneToMany(targetEntity="App\Entity\Photo", mappedBy="project" , cascade={"persist"})
      */
     private $photos;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Document")
+     */
+    private $documents;
 
     public function __construct()
     {
         $this->skills = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -176,6 +191,44 @@ class Project
             if ($photo->getProject() === $this) {
                 $photo->setProject(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Document[]
+     */
+    public function getDocuments(): Collection
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(Document $document): self
+    {
+        if (!$this->documents->contains($document)) {
+            $this->documents[] = $document;
+        }
+
+        return $this;
+    }
+
+    public function removeDocument(Document $document): self
+    {
+        if ($this->documents->contains($document)) {
+            $this->documents->removeElement($document);
         }
 
         return $this;

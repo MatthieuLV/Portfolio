@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container tac welcome error">
+    <h5 class="code-error">Une erreur est survenue, veuillez vous rediriger vers une autre page.</h5>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="tac mt-25 pt-20">
+    <img class="logo" src="{{asset('images/logo-dark.png')}}" height="50">
+    <p>© Matthieu Le Verger | 2020 | <a href="{{path('legals')}}">Mentions Légales</a><p>
+  </div>
+{% endblock %}

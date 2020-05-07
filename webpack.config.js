@@ -8,6 +8,13 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
+    .copyFiles([
+    {from: './node_modules/ckeditor/', to: 'ckeditor/[path][name].[ext]', pattern: /\.(js|css)$/, includeSubdirectories: false},
+    {from: './node_modules/ckeditor/adapters', to: 'ckeditor/adapters/[path][name].[ext]'},
+    {from: './node_modules/ckeditor/lang', to: 'ckeditor/lang/[path][name].[ext]'},
+    {from: './node_modules/ckeditor/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
+    {from: './node_modules/ckeditor/skins', to: 'ckeditor/skins/[path][name].[ext]'}
+    ])
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path
@@ -60,6 +67,8 @@ Encore
 
     var CopyWebpackPlugin = require('copy-webpack-plugin');
 
+
+    
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 
@@ -73,6 +82,8 @@ Encore
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
     //.addEntry('admin', './assets/js/admin.js')
+
+    
 ;
 
 module.exports = Encore.getWebpackConfig();

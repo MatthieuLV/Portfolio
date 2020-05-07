@@ -3989,6 +3989,7 @@ a.text-shadow-light:hover, a.text-shadow-light:focus {
 html {
   box-sizing: border-box;
   -ms-overflow-style: scrollbar;
+  scroll-behavior: smooth;
 }
 
 *,

@@ -7,9 +7,10 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
+ 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhotoRepository")
+ * @Vich\Uploadable
  */
 class Photo
 {
@@ -21,14 +22,14 @@ class Photo
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="photos",cascade={"persist"})
      */
     private $project;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      * 
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="image.name", size="image.size", mimeType="image.mimeType", originalName="image.originalName", dimensions="image.dimensions")
+     * @Vich\UploadableField(mapping="project_image", fileNameProperty="image.name", size="image.size", mimeType="image.mimeType", originalName="image.originalName", dimensions="image.dimensions")
      * 
      * @var File|null
      */
@@ -40,6 +41,7 @@ class Photo
      * @var EmbeddedFile
      */
     private $image;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -73,14 +75,14 @@ class Photo
     
     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|UploadedFile|null $imageFile
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
      */
-    public function setImageFile(?File $imageFile = null)
+    public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
 
@@ -104,5 +106,15 @@ class Photo
     public function getImage(): ?EmbeddedFile
     {
         return $this->image;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 }

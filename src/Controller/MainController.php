@@ -20,7 +20,7 @@ class MainController extends AbstractController
         $texts = $textRepository->findAll();
         $projects = $projectRepository->findAll();
         $skills = $skillRepository->findAll();
-        $experiences = $skillRepository->findAll();
+        $experiences = $experienceRepository->findAll();
         $contactForm = $this->createForm(MessageType::class);
         return $this->render('main/index.html.twig', [
             'texts' => $texts,
@@ -29,5 +29,13 @@ class MainController extends AbstractController
             'experiences' => $experiences,
             'contactForm' => $contactForm->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/mentions-légales", name="legals")
+     */
+    public function legals()
+    {
+        return $this->render('legals.html.twig');
     }
 }

@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+$text-colors: #f2f3f7, #424a53;
+$secondary-colors: #75a1e5, #75e5a1, #e575a1, orange;
+$background-colors: #212529, #f2f3f7;
+$shadow-top-colors:#353b42, #ffffff;
+$shadow-bottom-colors: #0d0f10, #dde4ef;
+ 
+:root {
+  --left: 1px;
+  --top: 1px;
+  --secondary-colors: #{$secondary-colors};
+  --secondary-color: #75a1e5;
+  --text-colors: #{$text-colors};
+  --text-color: #212529;
+  --background-colors: #{$background-colors};
+  --background-color: #f2f3f7;
+  --shadow-top-colors:#{$shadow-top-colors};
+  --shadow-top-color: #ffffff;
+  --shadow-bottom-colors:#{$shadow-bottom-colors};
+  --shadow-bottom-color: #dde4ef;
+}
+
+$secondary:();
+$secondary: append($secondary,var(--secondary-color));
+
+$text:();
+$text: append($text,var(--text-color));
+
+$background:();
+$background: append($background, var(--background-color));
+
+$shadow-top:();
+$shadow-top: append($shadow-top , var(--shadow-top-color));
+
+$shadow-bottom:();
+$shadow-bottom: append($shadow-bottom , var(--shadow-bottom-color));

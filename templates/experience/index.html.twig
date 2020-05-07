@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Experience : {{experience.companyName}}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <div style="position:sticky; top:100px">
+                <div class="col-12">
+                    <div class="np-element np-photoslider mt-25">
+                        <img src="{{ asset('images/experiences/' ~ experience.image.name) }}" class="photoslider">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="np-element mtb-20 mt-25">
+                <h6>Entreprise :</h6>
+                <p>{{experience.companyName}}</p>
+            </div>
+            <div class="np-element mb-20">
+                <h6>Contexte :</h6>
+                <p>{{experience.context}}</p>
+            </div>
+            <div class="np-element mb-20">
+                <h6>Periode :</h6>
+                <p>{{experience.period}}</p>
+            </div>
+            <div class="np-element mb-20">
+                <h6>Missions :</h6>
+                <p>{{experience.missions}}</p>
+            </div>
+            <div class="np-element mb-20">
+                <div class="row justify-content-center">
+                    <div class="col-12"><h6>Technologies utilisées :</h6></div>
+                    {% for skill in experience.skills %}
+                    <div class="col-2" >
+                        <img src="{{ asset('images/skills/' ~ skill.image.name) }}" width="100%">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="np-element mb-20">
+                <h6>Bilan :</h6>
+                <p>{{experience.results}}</p>
+            </div>
+            <div class="np-element np-hover mb-100 tac">
+                <a href="{{path('home')}}#experiences">
+                    <i class="fas fa-arrow-left"></i>  Retour
+                </a>
+            </div>   
+        </div>
+    </div>
+</div>
+{% endblock %}

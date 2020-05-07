@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -11,55 +11,81 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg np-element  sticky-top">
-            <a class="navbar-brand" href="#">
-                <img src="{{asset('images/logo-dark.png')}}" height="50">
+    <body data-spy="scroll" data-target="#navbar" data-offset="75">
+        <nav class="navbar navbar-expand-lg sticky-top" id="navbar">
+            <a class="navbar-brand" href="{{path('home')}}">
+                <div class="losange"></div>
+                <img class="logo" src="{{asset('images/logo-dark.png')}}" height="50">
             </a>
-            <h1>Matthieu Le Verger</h1>
+            <h1>M<span>atthieu</span><span id="dot">.</span> Le Verger</h1>
+            {% block navbar %}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+              <span id="toggggler" class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
             </button>
           
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav ml-auto">
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Réalisations</a>
+                  <a class="nav-link np-btn nav-btn" href="{{path('home')}}#presentation">Parcours</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Parcours</a>
+                  <a class="nav-link np-btn nav-btn" href="{{path('home')}}#projects">Réalisations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Compétences</a>
+                    <a class="nav-link np-btn nav-btn" href="{{path('home')}}#skills">Compétences</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Expériences</a>
+                    <a class="nav-link np-btn nav-btn" href="{{path('home')}}#experiences">Expériences</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link np-btn nav-btn" href="{{path('home')}}#contact">Contact</a>
                 </li>
-                {% if app.user %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{path('logout')}}">Déconnexion</a>
-                  </li>
-                {% endif %}
               </ul>
             </div>
+            {% endblock %}
+          </nav> 
+          <nav class="np-element navbar nav-mobile justify-content-center" id="nav-mobile">
+            <ul class="nav navbar-nav ml-auto nav-inline">
+              <li class="nav-item nav-item-mobile">
+                <a class="nav-link np-btn nav-mini-btn" href="{{path('home')}}#presentation"><i class="fas fa-user-graduate"></i></a>
+              </li>
+              <li class="nav-item nav-item-mobile">
+                <a class="nav-link np-btn nav-mini-btn" href="{{path('home')}}#projects"><i class="fas fa-code"></i></a>
+              </li>
+              <li class="nav-item nav-item-mobile">
+                  <a class="nav-link np-btn nav-mini-btn" href="{{path('home')}}#skills"><i class="fab fa-html5"></i></a>
+              </li>
+              <li class="nav-item nav-item-mobile">
+                  <a class="nav-link np-btn nav-mini-btn" href="{{path('home')}}#experiences"><i class="fas fa-suitcase"></i></a>
+              </li>
+              <li class="nav-item nav-item-mobile">
+                  <a class="nav-link np-btn nav-mini-btn" href="{{path('home')}}#contact"><i class="fas fa-envelope"></i></a>
+              </li>
+            </ul>
           </nav>
+          
         {% block body %}
         
         {% endblock %}
 
+        {% block footer %}
+        <div class="np-element tac mt-25 pt-20">
+          <img class="logo" src="{{asset('images/logo-dark.png')}}" height="50">
+          <p>© Matthieu Le Verger | 2020 | <a href="{{path('legals')}}">Mentions Légales</a><p>
+        </div>
+        {% endblock %}
+
         {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+        
 
         <!-- Renders app.js & a webpack runtime.js file
             <script src="/build/runtime.js"></script>
             <script src="/build/app.js"></script> -->
-
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>            
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>        
+        {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </body>
 </html>

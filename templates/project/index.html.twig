@@ -1,20 +1,68 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProjectController!{% endblock %}
+{% block title %}Projet : {{project.name}}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Portfolio/src/Controller/ProjectController.php'|file_link(0) }}">src/Controller/ProjectController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Portfolio/templates/project/index.html.twig'|file_link(0) }}">templates/project/index.html.twig</a></code></li>
-    </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <div class="col-12">
+                {% for photo in project.photos %}
+                {% if loop.first %}
+                {% else %}
+                    <div class="np-element np-photoslider mt-25">
+                        <img src="{{ asset('images/projects/' ~ photo.image.name) }}" class="photoslider">
+                    </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-12 col-sm-6">
+            <div style="position:sticky; top:100px">
+                <div class="np-element mb-20">
+                    <div class="row justify-content-center">
+                        <div class="col-12"><h6>Technologies utilisées :</h6></div>
+                        {% for skill in project.skills %}
+                        <div class="col-2" >
+                            <img src="{{ asset('images/skills/' ~ skill.image.name) }}" width="100%">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="np-element mb-20">
+                    <h6>Description :</h6>
+                    <p>{{project.description}}</p>
+                </div>
+                <div class="np-element mb-20">
+                    <h6>Contexte :</h6>
+                    <p>{{project.context}}</p>
+                </div>
+                <div class="np-element mb-20">
+                    <h6>Periode :</h6>
+                    <p>{{project.period}}</p>
+                </div>
+                {% if project.documents is not null %}
+                <div class="np-element mb-20">
+                    <h6>Documentation(s) :</h6>
+                    <ul>
+                    {% for document in project.documents %}
+                        <li><a href="{{ asset('documents/' ~ document.document.name) }}" target="_blank"> {{document.name}} </a></li>
+                        
+                    {% endfor %}
+                </ul>
+                </div> 
+                {% endif %}
+                <div class="np-element mb-20">
+                    <h6>Bilan :</h6>
+                    <p>{{project.results}}</p>
+                </div> 
+                <div class="np-element np-hover mb-100 tac">
+                    <a href="{{path('home')}}#projects">
+                        <i class="fas fa-arrow-left"></i>  Retour
+                    </a>
+                </div>     
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

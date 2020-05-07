@@ -1,12 +1,243 @@
+@import '../css/darkmode.scss';
+
+// GENERAL //
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+    width: 0.5%;
+    height: 0.5%;
+    background: $background;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    width: 3px;
+    background: $secondary;
+    border-radius: 5px;
+  }
+
+body {
+    position: relative;
+	font-family: 'Lato', sans-serif;
+	-webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+    background-color: $background;
+    color: $text;
+    transition: ease 1s;
+    height: 100%;
+    overflow-X:none;
+
+    @each $color in $secondary-colors {
+        $indexSecondary: index($secondary-colors, $color);
+            &[secondary-color='#{$indexSecondary - 1}']
+            {
+                --secondary-color: #{$color};
+            }
+        }
+  
+    @each $color in $background-colors {
+        $indexMode: index($background-colors, $color);
+            &[background-color='#{$indexMode - 1}']
+            {
+                --background-color: #{$color};
+            }
+        }
+  
+    @each $color in $text-colors {
+        $indexMode: index($text-colors, $color);
+            &[text-color='#{$indexMode - 1}']
+            {
+                --text-color: #{$color};
+            }
+        }
+
+    @each $color in $shadow-top-colors {
+        $indexMode: index($shadow-top-colors, $color);
+            &[shadow-top-color='#{$indexMode - 1}']
+            {
+                --shadow-top-color: #{$color};
+            }
+        }
+
+    @each $color in $shadow-bottom-colors {
+        $indexMode: index($shadow-bottom-colors, $color);
+            &[shadow-bottom-color='#{$indexMode - 1}']
+            {
+                --shadow-bottom-color: #{$color};
+            }
+        }
+}
+
+h2{
+    text-align: left;
+    font-size: 5em;
+    font-weight: bold;
+    color: $background;
+    font-size: 9vw;
+    text-shadow: -6px -6px 6px $shadow-top, 6px 6px 6px $shadow-bottom;
+    transition: ease-out 0.5s;
+}
+
+h2:hover {
+    text-shadow: -2px -2px 2px $shadow-top, 2px 2px 2px $shadow-bottom ;
+    transition: ease-out 0.5s;
+}
+
+@media (max-width:991px)
+{
+    h2 {
+        text-shadow: -3px -3px 3px $shadow-top, 3px 3px 3px $shadow-bottom;
+        font-size: 12vw;
+    }
+
+    h5 {
+        font-size: 10vw !important;
+    }
+}
+
+
+h3
+{
+    color: $secondary;
+}
+
+h4 span
+{
+    color: $secondary !important;
+}
+
+h5
+{
+    font-weight: bold;
+    color: $background;
+    text-align: center;
+    font-size: 6vw;
+    margin: 30px 0;
+    text-shadow: -3px -3px 3px $shadow-top, 3px 3px 3px $shadow-bottom;
+}
+
+
+h6
+{
+    color: $secondary;
+}
+
+a
+{
+    color: $text;
+}
+
+a:hover
+{
+    text-decoration: none;
+    color: $secondary;
+}
+// MARGIN, PADDING AND OTHER GENERIC CLASSES //
+.tdn {
+    text-decoration: none !important;
+    display: block;
+}
+
+.p-15 {
+    padding: 15px;
+}
+
+.pt-20
+{
+    padding-top: 20px !important;
+}
+
+.mb-20
+{
+    margin-bottom: 20px;
+}
+
+.mt-25
+{
+    margin-top: 25px;
+}
+
+.mb-100
+{
+    margin-bottom: 100px;
+}
+
+.tac
+{
+    text-align: center;
+}
+
+.mtb-20
+{
+    margin: 20px 0;
+}
+
+.mt-100
+{
+    margin-top : 100px;
+}
+
+span.legals
+{
+    color: $secondary;
+}
+
+// NAVBAR //
+.logo {
+    border-radius: 50%;
+    -webkit-transition: -webkit-transform 1s ease-in-out;
+            transition: transform 1s ease-in-out;
+  }
+  
+.logo:hover {
+    -webkit-transform: rotate(540deg);
+            transform: rotate(540deg);
+}
+
+.losange
+{
+    height: 45px;
+    width: 45px;
+    position: absolute;
+    margin:2px;
+    border-radius: 10px;
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+    background-color: $secondary;
+    z-index: -1;
+}
+
+.losange:hover
+{
+    -webkit-transform: rotate(585deg);
+            transform: rotate(585deg);
+}
+
 h1
 {
-    color: #333;
+    color: $text;
+    font-size: 2rem;
+}
+
+@media (max-width:1130px) and (min-width: 992px)
+{
+    h1 span 
+    {
+        display: none;
+    }
+
+    h1 span#dot
+    {
+        display: inline !important;
+    }
+}
+
+#dot
+{
+    display: none;
 }
 
 .navbar-collapse
@@ -14,57 +245,54 @@ h1
     text-align: center;
 }
 
-body {
-	font-family: 'Lato', sans-serif;
-	-webkit-font-smoothing: antialiased;
-	 -moz-osx-font-smoothing: grayscale;
-	 background: #f2f3f7;
-}
-
-
-li.nav-item {
-	color: #333;
-	position: relative;
-	text-decoration: none;
-	
-	&::after {
-		content: '';
-		position: absolute;
-		left: 50%;
-		bottom: 0;
-		transform: translateX(-50%) scaleX(0);
-		transform-origin: 50% 50%;
-		width: 100%;
-		height: 1px;
-		background-color: #333;
-		transition: transform 250ms;
-	}
-	
-	&:hover {
-		
-		&::after {
-			transform: translateX(-50%) scaleX(0.8);
-		}
-		
-	}
-	
-}
-
-.neum
+.nav-btn
 {
-	width: 100%;
-	border-radius: 50px;
-	background: #f2f3f7;
-	box-shadow:  41px 41px 82px #cfcfcf, 
-             -41px -41px 82px #ffffff;
-    border: solid 2px #f2f3f7;
+    width: 130px;
+    margin-left: 10px;
 }
 
+.nav-item
+{
+    margin: 5px auto;
+}
+
+.nav-link.active 
+{
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+    font-size: calc( 1rem * .95);
+    color: var(--text-color);
+    transition: ease 0.8s;
+}
+.navbar-toggler-icon
+{
+    background-color: $background;
+    color: $secondary;
+    line-height: 130%;
+    font-size: 2rem;
+    transition: ease 1s;
+}
+// HOMEPAGE //
+#homepage
+{
+    display: block;
+    width: 100%;
+    padding: 5% 10%;
+    top: 0;
+    left:0;
+    margin-top: 35vh; /* poussé de la moitié de hauteur de viewport */
+    transform: translateY(-50%);
+}
+
+// PRESENTATION //
+#presentation
+{
+    padding-top: 30vh;
+}
 .photo
 {
     object-fit: cover;
 	padding: 0 !important;
-	background: #f2f3f7;
+	background: $background;
     margin-bottom: 20px;
 }
 
@@ -74,7 +302,7 @@ li.nav-item {
     text-align: justify;
 }
 
-@media (max-width:992px)
+@media (max-width:991px)
 {
     .blocpresentation h3,.blocpresentation h4
     {
@@ -95,10 +323,27 @@ li.nav-item {
 #cv
 {
     display: block;
-    width: 80%;
     text-align: center;
     margin: auto;
+    clear: both;
 }
+
+.network-left
+{
+    width: 48%;
+    margin-right: 2%;
+    float: left;
+}
+
+.network-right
+{
+    width: 48%;
+    margin-left: 2%;
+    float: right;
+    display: inline-block;
+}
+
+// TIMELINE //
 
 .timeline
 {
@@ -115,7 +360,7 @@ li.nav-item {
     width: 5px;
     height: 600px;
     background-size:cover;
-    background: #fff;
+    background: $shadow-top;
     left: 50%;
     margin-left: -2.5px;
 }
@@ -134,7 +379,7 @@ li.nav-item {
 }
 .timeline li .timeline-badge
 {
-    color: #333;
+    color: $secondary;
     width: 50px;
     line-height: 50px;
     font-size: 20px;
@@ -176,8 +421,8 @@ li.nav-item {
     right: -14px;
     display:inline-block;
     border-top: 14px solid transparent;
-    border-left: 14px solid #fff;
-    border-right: 0 solid #fff;
+    border-left: 14px solid $shadow-top;
+    border-right: 0 solid $shadow-top;
     border-bottom: 14px solid transparent;
     content: " ";
 }
@@ -190,7 +435,7 @@ li.nav-item {
 }
 .timeline-heading h3
 {
-    color: #000;
+    color: $text;
 }
 .timeline-heading h4
 { 
@@ -207,14 +452,517 @@ li.nav-item {
 .timeline a
 {
     text-decoration: none;
-    color: #000;
+    color: $text;
 }
 .timeline a:hover
 {
-    color: #00BFFF;
+    color: $secondary;
 }
 
-.tdn {
-    text-decoration: none !important;
-    display: block;
+// PROJECTS //
+
+.image-box-project {
+   
+    overflow: hidden;
+    height: 0 !important;
+    width: 100% !important;
 }
+.image-box-project img {
+    max-width: 100%;
+    transition: all 0.3s;
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(1.1);
+}
+
+.image-box-project:hover img {
+    transform: scale(1);
+}
+
+
+.np-project {
+    padding: 0px 0px 75% 0px !important;
+    width: 100%;
+    height: 300px;
+}
+
+.hoverproject {
+    position: absolute !important;
+    top: 15px;
+    left: 15px;
+    bottom: 15px;
+    right: 15px;
+    border: 1px solid $shadow-top;
+}
+
+
+.photoproject {
+    padding: 0px !important;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+// SKILLS //
+
+.np-skill {
+    padding: 0px !important;
+    width: 100%;
+    height: 150px;
+}
+
+.hoverskill {
+    position: absolute !important;
+    top: 15px;
+    left: 15px;
+    bottom: 15px;
+    right: 15px;
+    border: 1px solid $shadow-top;
+    border-radius: 50%;
+}
+
+.photoskill {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.image-box-skill { 
+    overflow: hidden;
+    border-radius: 50% !important;
+    height: 0;
+    padding-bottom: 95% !important;
+    width: 100%;
+}
+.image-box-skill img {
+    max-width: 100%;
+    transition: all 0.3s;
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(0.6);
+}
+
+.image-box-skill:hover img {
+    transform: scale(0.5);
+}
+
+// EXPERIENCES //
+
+.np-experience {
+    padding: 0px !important;
+    width: 100%;
+    height: 150px;
+}
+
+.hoverexperience {
+    position: absolute !important;
+    top: 15px;
+    left: 15px;
+    bottom: 15px;
+    right: 15px;
+    border: 1px solid $shadow-top;
+}
+
+.photoexperience {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.image-box-experience { 
+    overflow: hidden;
+    height: 0;
+    padding-bottom: 95% !important;
+    width: 100%;
+}
+.image-box-experience img {
+    max-width: 100%;
+    transition: all 0.3s;
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(1.1);
+}
+
+.image-box-experience:hover img {
+    transform: scale(1);
+}
+
+// PROJECT CARDS // 
+
+.photoslider
+{
+    object-fit: cover;
+    width: 100%;
+}
+
+.np-photoslider
+{
+    padding: 0 !important;
+}
+
+
+// EFFECTS //
+.from-bottom,
+.from-right,
+.from-left,
+.from-center {
+    opacity: 0;
+    transition: transform 1s ease-in-out, opacity 0.8s ease-in-out ;
+}
+.from-right {
+    transform: translate(100px,0px);
+}
+.from-left {
+    transform: translate(-100px,0px);
+}
+.from-bottom {
+    transform: translate(0px, 50px);
+}
+
+.from-center
+{
+    transform: translate(0px,0px);
+}
+
+// DARKMODE //
+
+.secondary {
+    transition: ease 0.3s;
+    font-weight: bold;
+    font-family: 'Lato', cursive;
+    letter-spacing: 1rem;
+    color: $secondary;
+  }
+
+.text {
+    transition: ease 1s;
+    font-weight: bold;
+    font-family: 'Lato', cursive;
+    letter-spacing: 1rem;
+    background-color: $background;
+    color: $text;
+}
+
+.small-text {
+  transition: ease 1s;
+  font-weight: bold;
+  font-family: 'Lato', cursive;
+  letter-spacing: 0rem;
+  background-color: $background;
+  color: $text;
+  font-size: 1rem !important;
+}
+
+#changer
+{
+    position: fixed;
+    top: 45%;
+    left: 0;
+    padding: 0;
+}
+
+#change-mode
+{
+	width: 1.2rem;
+	height: 1.2rem;
+	background-color: var(--text-color);
+	cursor: pointer;
+    border-radius: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+#change-secondary
+{
+	width: 1.2rem;
+	height: 1.2rem;
+	background-color: var(--secondary-color);
+	cursor: pointer;
+	border-radius: 0.3rem;
+}
+
+// NP-CLASSES //
+.np-element {
+    background: $background;
+    color: $text;
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+    border-radius: 5px;
+    padding: 0.4rem 1rem;
+    border: 1px solid $shadow-top;
+    transition: all 0.3s;
+  } 
+  .np-element::after, .np-element::before {
+    transition: all 0.3s;
+  }
+  .np-element-inverse {
+    background: $background;
+    color: $secondary;
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+    border-radius: 5px;
+    padding: 0.4rem 1rem;
+    border: 1px solid $shadow-top;
+    font-size: calc( 1rem * .995);
+    transition: all 0.3s;
+  }
+  .np-element-inverse::after, .np-element-inverse::before {
+    transition: all 0.3s;
+  }
+
+  .np-hover {
+    transition: all 0.3s;
+    color: $secondary;
+  }
+  .np-hover:hover {
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+    font-size: calc( 1rem * .995);
+    color: $text;
+  }
+  .np-hover-inverse:hover {
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+    font-size: calc( 1rem * 1.1);
+  }
+  .np-btn {
+    background: $background;
+    color: $secondary;
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+    border-radius: 5px;
+    padding: 0.4rem 1rem;
+    border: 1px solid $shadow-top;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 5px;
+    line-height: 1.8rem;
+    padding: 0.4rem;
+    cursor: pointer;
+  }
+  .np-btn:hover {
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+    font-size: calc( 1rem * .95);
+    color: $text;
+    transition: ease 0.8s;
+  }
+  .np-btn:focus {
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+    font-size: calc( 1rem * .95);
+    color: $text;
+  }
+
+  .np-shadow {
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+  }
+  .np-shadow-inverse {
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+  }
+  .np-shadow-double {
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+  }
+  .np-shadow-border-square {
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .np-shadow-border-square::before {
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+    content: "";
+    display: block;
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    z-index: 2;
+    top: 10%;
+    left: 10%;
+  }
+  .np-shadow-border-circle {
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .np-shadow-border-circle::before {
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+    content: "";
+    display: block;
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    z-index: 2;
+    top: 10%;
+    left: 10%;
+    border-radius: 50%;
+  }
+  .np-shadow-border-square-push {
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .np-shadow-border-square-push::before {
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+    content: "";
+    display: block;
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    z-index: 2;
+    top: 10%;
+    left: 10%;
+  }
+  .np-shadow-border-square-push:hover::before {
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+  }
+  .np-shadow-border-circle-push {
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .np-shadow-border-circle-push::before {
+    box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+    content: "";
+    display: block;
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    z-index: 2;
+    top: 10%;
+    left: 10%;
+    border-radius: 50%;
+  }
+  .np-shadow-border-circle-push:hover::before {
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .np-form-group {
+    background: $background;
+    color: $secondary;
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+    border-radius: 5px;
+    padding: 0.4rem 1rem;
+    border: 1px solid $shadow-top;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.3rem;
+    margin-top: 0.3rem;
+  }
+
+  input.np-element:focus,
+select.np-element:focus,
+textarea.np-element:focus,
+textarea.np-form-element:focus,
+input.np-form-element:focus,
+select.np-form-element:focus,
+button.np-btn:focus,
+.np-btn:focus,
+.np-form-element:focus,
+.np-square-sm:focus,
+.np-square-md:focus,
+.np-square-lg:focus,
+.np-square-xl:focus,
+.np-square-xxl:focus,
+.np-circle-sm:focus,
+.np-circle-md:focus,
+.np-circle-lg:focus,
+.np-circle-xl:focus,
+.np-circle-xxl:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 0px $shadow-bottom, 0px 0px 0px 0px $shadow-top, inset 6px 6px 16px 0px $shadow-bottom, inset -6px -6px 16px 0px $shadow-top;
+  font-size: calc( 1rem * .995);
+}
+
+  .np-form-element {
+    background: $background;
+    color: $secondary;
+    box-shadow: 6px 6px 16px 0px $shadow-bottom, -6px -6px 16px 0px $shadow-top, inset 0px 0px 0px 0px $shadow-bottom, inset 0px 0px 0px 0px $shadow-top;
+    border-radius: 5px;
+    padding: 0.4rem 1rem;
+    border: 1px solid $shadow-top;
+    padding: 0.6rem 0.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .np-text-accent {
+    color: $text;
+  }
+
+  // NAVBAR MOBILE //
+#nav-mobile
+{
+    width: 100%;
+    position : fixed;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.nav-item-mobile
+{
+    display: inline-block;
+    text-align: center;
+}
+
+.nav-inline
+{
+    display: inline-block;
+    margin: auto;
+}
+
+.nav-mini-btn
+{
+    width: 50px;
+    margin-left: 2px;
+}
+
+@media (max-width: 550px)
+{
+    .navbar-toggler-icon
+    {
+        display: none !important;
+    }
+
+    h1
+    {
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 551px)
+{
+    #nav-mobile 
+    {
+        display: none;
+    }
+}
+
+// ERRORS //
+.error 
+{
+    font-size: 6vh;
+    display: block;
+    width: 100%;
+    padding: 5% 10%;
+    top: 0;
+    left:0;
+    margin-top: 35vh; /* poussé de la moitié de hauteur de viewport */
+    transform: translateY(-50%);
+}
+
+.text-error
+{
+    font-size: 8vh !important;
+}
+
+.code-error
+{
+    font-size: 15vh !important;
+}
+

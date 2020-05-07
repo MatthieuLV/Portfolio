@@ -1,7 +1,107 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout/Modification d'un projet{% endblock %}
+{% block title %}Ajout d'un projet{% endblock %}
+
+{% form_theme projectForm _self %}
 
 {% block body %}
+{{form_start(projectForm)}}
+{{form_widget(projectForm)}}
+{{form_end(projectForm)}}
+{% endblock %}
+
+{% block _project_photos_widget %}
+<br>
+<p>Ajouter des images pour le slider du projet : </p>
+<br>
+
+{{ form_widget(form) }}
+{{ form_errors(form) }}
+
+<div class='form-group'>
+    <button type='button' id='add-image'>Ajouter une image</button>
+</div>
+{% endblock %}
+
+{% block _project_photos_entry_widget %}
+
+<div class='form-group' id='block_{{id}}'>
+
+    {{ form_widget(form) }}
     
+        <button type="button" data-action="delete" data-target="#block_{{id}}" alt="supprimer" width="15px">Supprimer</button>
+    
+</div>
+
+{% endblock %}
+
+{% block _project_documents_widget %}
+<br>
+<p>Ajouter des documents : </p>
+<br>
+
+{{ form_widget(form) }}
+{{ form_errors(form) }}
+
+<div class='form-group'>
+    <button type='button' id='add-document'>Ajouter un document</button>
+</div>
+{% endblock %}
+
+{% block _project_documents_entry_widget %}
+
+<div class='form-group' id='block_doc_{{id}}'>
+
+    {{ form_widget(form) }}
+    
+        <button type="button" data-action="delete" data-target="#block_doc_{{id}}" alt="supprimer" width="15px">Supprimer</button>
+    
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="{{ asset('build/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+    <script>
+    $('#add-image').click(function(){
+        // recupere le nombre des futurs champs qui vont etre créés
+        const index = $('#project_photos div.form-group').length;
+        // recupere le prototype des entrées 
+        const tmpl = $('#project_photos').data('prototype').replace(/__name__/g, index);
+        
+        //injecte ce code au sein de la div
+        $('#project_photos').append(tmpl);
+        handleDeleteButtons();
+        });
+        function handleDeleteButtons(){
+            $('button[data-action="delete"]').click(function(){
+                const target = this.dataset.target
+                
+                $(target).remove();
+            });
+        }
+        handleDeleteButtons();
+    </script>
+    <script>
+    $('#add-document').click(function(){
+        // recupere le nombre des futurs champs qui vont etre créés
+        const index2 = $('#project_documents div.form-group').length;
+        // recupere le prototype des entrées 
+        const tmpl2 = $('#project_documents').data('prototype').replace(/__name__/g, index2);
+        
+        //injecte ce code au sein de la div
+        $('#project_documents').append(tmpl2);
+        handleDeleteButtons();
+        });
+        function handleDeleteButtons(){
+            $('button[data-action="delete"]').click(function(){
+                const target = this.dataset.target
+                
+                $(target).remove();
+            });
+        }
+        handleDeleteButtons();
+    </script>
 {% endblock %}
